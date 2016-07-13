@@ -26,7 +26,7 @@ setopt PUSHD_IGNORE_DUPS
 setopt ZLE
 
 # EOF doesn't quit the shell
-setopt IGNORE_EOF
+#setopt IGNORE_EOF
 
 # If I could disable Ctrl-s completely I would!
 setopt NO_FLOW_CONTROL
@@ -39,6 +39,10 @@ setopt NO_BEEP
 
 # sort files numerically if possible
 setopt NUMERIC_GLOB_SORT
+
+# vim mode!!
+bindkey -v
+export KEYTIMEOUT=1
 
 # fix alt+left and alt+right
 bindkey "^[b" backward-word
@@ -83,14 +87,27 @@ zstyle ':completion:*' group-name ''
 # ==============================================================================
 # Prompt
 # ==============================================================================
+COLOUR="%{$fg[cyan]%}"
+
 function precmd {
   branch=$(git symbolic-ref --short HEAD 2>/dev/null)
   if [ $branch ]; then
     branch=$branch" "
   fi
-  PROMPT=" %{$fg[cyan]%}λ%{$reset_color%} %{$fg[yellow]%}%~%{$reset_color%} %{$fg[cyan]%}$branch%{$reset_color%}"
+  PROMPT=" ${COLOUR}λ%{$reset_color%} %{$fg[yellow]%}%~%{$reset_color%} %{$fg[cyan]%}$branch%{$reset_color%}"
 }
 precmd
+
+function zle-line-init zle-keymap-select {
+  case ${KEYMAP} in
+    (vicmd)      COLOUR="%{$fg[white]%}" ;;
+    (*)          COLOUR="%{$fg[cyan]%}" ;;
+  esac
+  precmd
+  zle reset-prompt
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
 
 # ==============================================================================
 # Source plugins
@@ -98,7 +115,7 @@ precmd
 source ~/.zsh/zsh-colored-man/zsh-colored-man.zsh
 source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 source ~/.zsh/zsh-dircycle/zsh-dircycle.zsh
-source ~/.zsh/zsh-sudo/zsh-sudo.zsh
+#source ~/.zsh/zsh-sudo/zsh-sudo.zsh
 
 # ==============================================================================
 # History substring search plugin
@@ -109,31 +126,10 @@ bindkey '^[[B' history-substring-search-down
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND=bg=none
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND=bg=none
 
-export EDITOR="vim"
+export EDITOR='vim'
 
 
 alias rmf='rm -rf'
 alias la='ls -AlhFG'
 alias ls='ls -hG'
 alias pp='python3'
-alias pnb='ipython3 notebook'
-
-. /Users/adampaszke/torch/install/bin/torch-activate
-alias qth='qlua -e "require('"'"'trepl'"'"')()"'
-
-
-# Added by termtile (https://github.com/apaszke/termtile)
-alias ul='osascript ~/.termtile/tile.scpt up left'
-alias ur='osascript ~/.termtile/tile.scpt up right'
-alias dl='osascript ~/.termtile/tile.scpt down left'
-alias dr='osascript ~/.termtile/tile.scpt down right'
-alias ll='osascript ~/.termtile/tile.scpt left'
-alias rr='osascript ~/.termtile/tile.scpt right'
-alias up='osascript ~/.termtile/tile.scpt up'
-alias down='osascript ~/.termtile/tile.scpt down'
-alias big='osascript ~/.termtile/resize.scpt '
-alias cen='osascript ~/.termtile/center.scpt '
-alias max='osascript ~/.termtile/maximize.scpt '
-alias sn='osascript ~/.termtile/changeScreen.scpt next'
-alias fs='osascript ~/.termtile/fullscreen.scpt '
-

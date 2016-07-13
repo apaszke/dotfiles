@@ -13,11 +13,6 @@ set nowrap
 " keep the cursor in the middle of the screen
 set scrolloff=15
 
-" tab = 2 spaces
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
-
 " expand tabs to spaces
 set expandtab
 
@@ -62,6 +57,9 @@ let mapleader = " "
 " change terminal title
 set title
 
+" don't fully autocomplete filenames
+set wildmode=list:longest,full
+
 " don't use terminal bell
 set visualbell
 set noerrorbells
@@ -71,14 +69,39 @@ set t_vb=
 set nobackup
 set noswapfile
 
+" tab = 4 spaces by default
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+
+" quickly change tab width
+nnoremap <leader>h :call TabWidthToggle()<CR>
+function! TabWidthToggle()
+    if &tabstop == 2
+        set tabstop=4
+        set softtabstop=4
+        set shiftwidth=4
+        echo "Tab width set to 4"
+    else
+        set tabstop=2
+        set softtabstop=2
+        set shiftwidth=2
+        echo "Tab width set to 2"
+    endif
+endfunction
+
+" handy shortcuts
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+
 " color 81th column
 let &colorcolumn=0
 nnoremap <leader>f :call ColorColumnToggle()<CR>
 function! ColorColumnToggle()
     if &colorcolumn
-        setlocal colorcolumn=0
+        set colorcolumn=0
     else
-        setlocal colorcolumn=81
+        set colorcolumn=81
     endif
 endfunction
 
@@ -93,7 +116,7 @@ nmap <leader>l :set list!<CR>
 set ttimeoutlen=10
 
 " shift+;+w = ;+w
-nnoremap ; :
+"nnoremap ; :
 
 " enable mouse scrolling
 set mouse=a
@@ -122,6 +145,9 @@ set encoding=utf-8
 
 " disable highlighting after search
 map <leader>s :noh<CR>
+
+" compile LaTeX after saving
+au BufWritePost *.tex silent exec ":!$(make >/dev/null 2>&1 &)"
 
 " :Wrap enables line wrapping
 command! -nargs=* Wrap set wrap linebreak nolist
@@ -160,7 +186,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
 let g:airline_left_sep=''
 let g:airline_right_sep='◀'
-let g:airline_theme='solarized'
+let g:airline_theme='molok'
 
 " show airline when there is only one tab
 set laststatus=2
@@ -168,10 +194,7 @@ set laststatus=2
 " ==============================================================================
 " NERDTree settings
 " ==============================================================================
-" open NERDTree if no files were specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
+"
 map <C-n> :NERDTreeToggle<CR>
 
 " ==============================================================================
@@ -205,7 +228,7 @@ autocmd InsertLeave * :set relativenumber
 " Commenter shortcuts
 " ==============================================================================
 " Ctrl+k toggles comments
-map <C-k> <leader>c<space>
+nmap <C-k> <leader>c<leader>
 
 " ==============================================================================
 " EasyMotion config
