@@ -163,11 +163,14 @@ Bundle 'kien/ctrlp.vim'
 
 Bundle 'supertab'
 
-Bundle 'bling/vim-airline'
+Bundle 'vim-airline/vim-airline'
+
+Bundle 'vim-airline/vim-airline-themes'
 
 Bundle 'scrooloose/nerdtree'
 
 Bundle 'godlygeek/tabular'
+
 Bundle 'plasticboy/vim-markdown'
 
 Bundle 'scrooloose/nerdcommenter'
@@ -185,8 +188,8 @@ filetype plugin indent on
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
 let g:airline_left_sep=''
-let g:airline_right_sep='◀'
-let g:airline_theme='molok'
+let g:airline_right_sep=''
+let g:airline_theme='monokai'
 
 " show airline when there is only one tab
 set laststatus=2
