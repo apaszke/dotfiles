@@ -70,9 +70,9 @@ set nobackup
 set noswapfile
 
 " tab = 4 spaces by default
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 
 " quickly change tab width
 nnoremap <leader>h :call TabWidthToggle()<CR>
@@ -146,9 +146,6 @@ set encoding=utf-8
 " disable highlighting after search
 map <leader>s :noh<CR>
 
-" compile LaTeX after saving
-au BufWritePost *.tex silent exec ":!$(make >/dev/null 2>&1 &)"
-
 " :Wrap enables line wrapping
 command! -nargs=* Wrap set wrap linebreak nolist
 
@@ -157,7 +154,7 @@ filetype off
 set runtimepath+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
 
-Bundle 'gmarik/vundle'
+Bundle 'VundleVim/Vundle.vim'
 
 Bundle 'kien/ctrlp.vim'
 
@@ -167,17 +164,15 @@ Bundle 'vim-airline/vim-airline'
 
 Bundle 'vim-airline/vim-airline-themes'
 
-Bundle 'scrooloose/nerdtree'
+"Bundle 'godlygeek/tabular'
 
-Bundle 'godlygeek/tabular'
-
-Bundle 'plasticboy/vim-markdown'
+"Bundle 'plasticboy/vim-markdown'
 
 Bundle 'scrooloose/nerdcommenter'
 
-Bundle 'wikitopian/hardmode'
+"Bundle 'wikitopian/hardmode'
 
-Bundle 'easymotion/vim-easymotion'
+"Bundle 'easymotion/vim-easymotion'
 
 Bundle 'airblade/vim-gitgutter'
 
@@ -193,17 +188,6 @@ let g:airline_theme='monokai'
 
 " show airline when there is only one tab
 set laststatus=2
-
-" ==============================================================================
-" NERDTree settings
-" ==============================================================================
-"
-map <C-n> :NERDTreeToggle<CR>
-
-" ==============================================================================
-" Markdown settings
-" ==============================================================================
-let g:vim_markdown_folding_disabled=1
 
 " Relative numbers
 " Relative line numbering only in sone cases
@@ -233,12 +217,7 @@ autocmd InsertLeave * :set relativenumber
 " Ctrl+k toggles comments
 nmap <C-k> <leader>c<leader>
 
-" ==============================================================================
-" EasyMotion config
-" ==============================================================================
-let g:EasyMotion_do_mapping = 0
-let g:EasyMotion_smartcase = 1
-
-nmap t <Plug>(easymotion-s2)
-
-
+augroup dex_ft
+  au!
+  autocmd BufNewFile,BufRead *.dx set syntax=haskell
+augroup END

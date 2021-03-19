@@ -114,8 +114,6 @@ zle -N zle-keymap-select
 # ==============================================================================
 source ~/.zsh/zsh-colored-man/zsh-colored-man.zsh
 source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
-source ~/.zsh/zsh-dircycle/zsh-dircycle.zsh
-#source ~/.zsh/zsh-sudo/zsh-sudo.zsh
 
 # ==============================================================================
 # History substring search plugin
